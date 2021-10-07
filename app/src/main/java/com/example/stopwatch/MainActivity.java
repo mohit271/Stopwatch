@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -46,34 +47,38 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        wasRunning = running;
-        running = false;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(wasRunning)
-            running=true;
-    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        wasRunning = running;
+//        running = false;
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if(wasRunning)
+//            running=true;
+//    }
 
     public void onClickStart(View view)
     {
         running = true;
+        Toast.makeText(this, "Timer Started", Toast.LENGTH_SHORT).show();
     }
     public void onClickReset(View view)
     {
         running = false;
         mSeconds =0;
+        Toast.makeText(this, "Timer Reset", Toast.LENGTH_SHORT).show();
     }
 
     public void onClickStop(View view)
     {
         running = false;
+        if(mSeconds!=0)
+        Toast.makeText(this, "Timer Stopped", Toast.LENGTH_SHORT).show();
     }
     private void runTimer() {
         final TextView timeView
@@ -83,10 +88,7 @@ public class MainActivity extends AppCompatActivity {
         handler.post(new Runnable() {
             @Override
             public void run() {
-//                int hours = mSeconds / 360000;
-//                int minutes = (mSeconds % 360000) / 6000;
-//                int secs = (mSeconds % 6000)/100;
-//                int ms = mSeconds%100;
+
 
                 int hours = mSeconds / 3600;
                 int minutes = (mSeconds % 3600) / 60;
@@ -107,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
               handler.postDelayed(this,1000);
             }
         });
-      //  handler.postDelayed(this::runTimer,100);
+
     }
 
 }
